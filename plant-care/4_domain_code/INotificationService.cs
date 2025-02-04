@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace plant_care._4_domain_code
 {
-    public abstract class Action
+    public interface INotificationService
     {
-        public abstract bool IsDue();
-        public abstract bool IsOverdue();
-        public abstract void Execute();
+
     }
 }

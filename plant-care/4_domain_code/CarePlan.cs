@@ -7,27 +7,21 @@ using System.Threading.Tasks;
 
 namespace plant_care._4_domain_code
 {
-	internal class CarePlan
+    public class CarePlan
 	{
-		private Guid id {get; set;}
-		private List<Action> actions {get; set;}
-		//TODO: is plan for multiple plants or just one?
-		//private List<Plant> plants {get; set;}
-		private Plant plant {get; set;}
-		private List<Notification>notifications {get; set;}	
+        public Guid id {get;}
+        public String name {get; private set; }
+        public List<Action> actions {get; private set; }
+        public List<Plant> plants {get; private set; }
+        public INotificationService notificationService {get; private set; }	
 
-		//public CarePlan(Guid id, List<Action> actions, List<Plant> plants)
-		//{
-		//	this.id = id;
-		//	this.actions = actions;
-		//	this.plants = plants;
-		//}
-
-		public CarePlan(Guid id, List<Action> actions, Plant plant)
+		public CarePlan(String name, INotificationService notificationService)
 		{
-			this.id = id;
-			this.actions = actions;
-			this.plant = plant;
+			this.id = Guid.NewGuid();
+			this.name = name;
+			this.actions = new List<Action>();
+			this.plants = new List<Plant>();
+			this.notificationService = notificationService;
 		}
 
 		public void addAction(Action action)
@@ -45,22 +39,41 @@ namespace plant_care._4_domain_code
 			actions.Clear();
 		}
 
-		//public void addPlant(Plant plant) 
-		//{
-		//	plants.Add(plant);
-		//}
-
-		//public void removePlant(Plant plant) {
-		//	plants.Remove(plant);
-		//}
-		//public void clearPlants() {
-		//	plants.Clear();
-		//}
-
-		//TODO: reverse dependency injection for service to send from here?
-		public void sendNotification(String message)
+		public void addPlant(Plant plant) 
 		{
-			Notification notif = new Notification(message);
+			plants.Add(plant);
 		}
-	}
+
+		public void removePlant(Plant plant) {
+			plants.Remove(plant);
+		}
+
+		public void clearPlants() {
+			plants.Clear();
+		}
+
+        public void getDueActions()
+        {
+            List<Action> actionsDue = new List<Action>();
+			foreach (Action action in this.actions)
+			{
+				if (action.IsDue())
+				{
+					actionsDue.Add(action);
+				}
+			}
+        }
+
+        public void getOverdueActions()
+        {
+            List<Action> actionsOverdue = new List<Action>();
+            foreach (Action action in this.actions)
+            {
+                if (action.IsOverdue())
+                {
+                    actionsOverdue.Add(action);
+                }
+            }
+        }
+    }
 }
