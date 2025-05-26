@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Grundlagen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Grundlegende Bausteine}
+% [h]       sollte die Tabelle genau hier anzeigen
+% {clrp}    sind verschieden parameter zum eanzeigen der Tabelle
+%           Anzahl der Buchstaben gleich Anzahl der Spalten
+%           c           zentrierter Text
+%           r           rechtsbündiger Text
+%           l           linksbündiger Text
+%           p{"x"cm}    Spalte soll "x" cm breit sein
+%           |           fügt einen senkrechten Strich zwischen den Spalten ein
+%           \hline      Horizontale Linie ober/unter und zwischen den Zeilen einfügen für Umrandung der Zellen 
+%           \\          Trennung der Zeilen
+%           &           Trennung der Spalten 
+
+\subsection{Wie baut man Tabellen?}
+
+Hier ganz viel Text und eine Referenz auf die Tabelle \ref{tab:heisetabelle}. 
+\begin{table}[h]
+	\begin{tabular}[h]{|l|p{7cm}|}
+	%\caption{Beschreibung der Tabelle}
+	    \hline
+		erste Spalte und Zeile & zweite Spalte und erste Zeile \\
+		\hline
+		erste Spalte und zweite Zeile & zweite Spalte und zweite Zeile \\
+		erste Spalte und dritte Zeile & zweite Spalte und dritte Zeile \\
+		\label{tab:heisetabelle}
+	\end{tabular}
+\end{table}
+
+\subsection{Wie erstellt man eine Aufzählung?}
+
+Beispiele für Klassifizierungsprobleme:
+\begin{itemize}
+    \item Handschrifterkennung
+    \item Krankheitsanalyse
+    \item E-Mail Spamfilter
+\end{itemize}
+
+\subsection{Bissl Mathe Nötig?}
+
+\begin{displaymath}
+    logit(p) = log \frac{p}{(1-p)}
+    logit(p(y=1|x)) = \sum_{i=0}^{m} w_{i}x_{i} = w^T x 
+\end{displaymath}
+
+\begin{displaymath}
+    \hat{y} =\left\{%
+    \begin{array}{lll}
+        1, & wenn & sig(z) \ge 0.5\\
+        0, & andernfalls & \\
+    \end{array}%
+    \right.
+\end{displaymath}
+
+\section*{Hier eine Section ohne Nummerierung}
+
+\subsection*{Geht auch bei Subsections}
+Das funktioniert einfach in dem man ein Stern zwischen sub/section und den {} setzt.
+\subsection{Und wieder mit Nummern}
+Aber wie ihr seht werden die Nummern nicht einfach ausgeblendet sondern gar nicht erst erstellt, somit geht es hier weiter mit 2.1.4 was theoretisch 2.2.2 sein müsste.
+
+Nummern wegzulassen ist meiner Meinung nur Sinnvoll wenn Ihr zum Beispiel alle Subsections nicht auflisten wollt, da wenn die Nummerierung wegelassen wird, diese sectionen auch nicht im Inhaltsverzeichnis auftauchen. Bei subsections macht es daher Sinn, wenn das Inhaltsverzeichnis zu groß wird oder die subsections für das Inhaltsverzeichnis uninteressant sind. Hier noch ein kleines Beispiel wie am Absätze macht. Entweder einfach eine Zeile freilassen 
+
+oder zwei \\  Backslashs schreiben 
