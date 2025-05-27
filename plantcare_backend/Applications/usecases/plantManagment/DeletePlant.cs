@@ -1,5 +1,4 @@
 ﻿using Application.repositoryInterfaces;
-using entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace Application.usecases.plantManagment
 {
-    public class RelocatePlant
+    public class DeletePlant
     {
         private readonly IPlantRepository _plantRepository;
 
-        public RelocatePlant(IPlantRepository plantRepository)
+        public DeletePlant(IPlantRepository plantRepository)
         {
             _plantRepository = plantRepository;
         }
 
-        public async Task<bool> ExecuteAsync(Guid plantId, Location newLocation)
+        public async Task<bool> ExecuteAsync(Guid plantId)
         {
             var plant = await _plantRepository.GetByIdAsync(plantId);
-            if (plant == null) return false;
+            if (plant == null)
+                return false;
 
-            plant.Relocate(newLocation);
-            await _plantRepository.UpdateAsync(plant);
+            await _plantRepository.DeleteAsync(plant);
             return true;
         }
     }

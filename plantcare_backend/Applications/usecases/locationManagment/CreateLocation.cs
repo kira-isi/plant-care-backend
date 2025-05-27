@@ -8,18 +8,20 @@ using System.Threading.Tasks;
 
 namespace Application.usecases.locationManagment
 {
-    public class GetAllLocations
+    public class CreateLocation
     {
         private readonly ILocationRepository _locationRepository;
 
-        public GetAllLocations(ILocationRepository locationRepository)
+        public CreateLocation(ILocationRepository locationRepository)
         {
             _locationRepository = locationRepository;
         }
 
-        public async Task<List<Location>> ExecuteAsync()
+        public async Task<Guid> ExecuteAsync(string name, string description)
         {
-            return await _locationRepository.GetAllAsync();
+            var location = new Location(name, description);
+            await _locationRepository.AddAsync(location);
+            return location.Id;
         }
     }
 }

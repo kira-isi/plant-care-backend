@@ -1,6 +1,6 @@
 ﻿using Application.repositoryInterfaces;
 using Domain.entities;
-using Domain.valueObjects;
+using entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

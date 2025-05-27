@@ -26,10 +26,10 @@ namespace Domain.entities
             taskList.Add(task);	
 		}
 
-        public Boolean removeTask(CareTask task) 
+        public void removeTask(Guid taskId) 
 		{ 
-			return taskList.Remove(task);
-		}
+			taskList.RemoveAll(t => t.Id == taskId);
+        }
 
         public void clearTaskList()
 		{
@@ -41,8 +41,8 @@ namespace Domain.entities
 			plants.Add(plant.PlantID);
 		}
 
-        public void removePlant(Plant plant) {
-			plants.Remove(plant.PlantID);
+        public void removePlant(Guid plantId) {
+			plants.Remove(plantId);
 		}
 
         public void clearPlants() {

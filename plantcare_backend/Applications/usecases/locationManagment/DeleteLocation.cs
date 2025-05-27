@@ -1,5 +1,4 @@
 ﻿using Application.repositoryInterfaces;
-using entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace Application.usecases.locationManagment
 {
-    public class GetAllLocations
+    public class DeleteLocation
     {
         private readonly ILocationRepository _locationRepository;
 
-        public GetAllLocations(ILocationRepository locationRepository)
+        public DeleteLocation(ILocationRepository locationRepository)
         {
             _locationRepository = locationRepository;
         }
 
-        public async Task<List<Location>> ExecuteAsync()
+        public async Task<bool> ExecuteAsync(Guid locationId)
         {
-            return await _locationRepository.GetAllAsync();
+            var location = await _locationRepository.GetByIdAsync(locationId);
+            if (location == null) return false;
+
+            await _locationRepository.DeleteAsync(location);
+            return true;
         }
     }
 }
