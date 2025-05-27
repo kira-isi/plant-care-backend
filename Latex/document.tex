@@ -1,0 +1,282 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	Vorlage für Praxisberichte 
+%	Jan Metzger
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+					ngerman,
+					a4paper,
+					12pt,
+					pdftex,
+				]{report}
+				
+				
+% Bitte die Codierung Ihrer Dateien auswählen:
+% \usepackage[latin1]{inputenc}    	% Für UNIX mit ISO-LATIN-codierten Dateien
+% \usepackage[applemac]{inputenc} 	% Für Apple Mac
+% \usepackage[ansinew]{inputenc}   	% Für Microsoft Windows
+\usepackage[utf8]{inputenc}        	% UTF-8 codierte Dateien
+									% Dieses Dokument ist unter Unix erstellt, daher
+									% wird diese Input-Codierung benutzt.
+									
+									
+									
+\usepackage{document}
+%\usepackage{acronym}
+\usepackage{listings}
+%\usepackage[sfdefault]{arimo}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{graphicx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Weis nicht für was das da ist????
+\definecolor{bluekeywords}{rgb}{0,0,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.64,0.08,0.08}
+\definecolor{xmlcomments}{rgb}{0.5,0.5,0.5}
+\definecolor{types}{rgb}{0.17,0.57,0.68}
+\definecolor{interfacecolor}{rgb}{0.75,0.78,0.27}
+
+\newcommand{\codefont}{\fontfamily{zi4}\selectfont}
+
+\lstdefinestyle{customcsharp}{language=[Sharp]C,
+	captionpos=b,
+	numbers=left, %Nummerierung
+	numberstyle=\tiny, % kleine Zeilennummern
+	frame=lines, % Oberhalb und unterhalb des Listings ist eine Linie
+	showspaces=false,
+	showtabs=false,
+	breaklines=true,
+	showstringspaces=false,
+	breakatwhitespace=true,
+	escapeinside={(*@}{@*)},
+	commentstyle=\color{greencomments},
+	morekeywords={partial, var, value, get, set, await},
+	keywordstyle=\color{bluekeywords},
+	stringstyle=\color{redstrings},
+	%identifierstyle=\color{types},
+	basicstyle=\ttfamily\footnotesize,
+	emph={X509Chain, X509Certificate, SslPolicyErrors, EntityDomainManager, Experiment, HttpRequestMessage, appContext, UnauthorizedAccessException, NameValueCollection, GlobalSettings, AccessViolationException, ExperimentNotification, ExperimentErrorNotification, InstrumentErrorNotification, ExperimentError, InstrumentError, RoutedEventArgs, StringBuilder, RandomNumberGenerator, RNGCryptoServiceProvider, Task, HttpResponseMessage, CancellationToken, ZXing.Result, MobileBarcodeScanner, AuthHeaderHandler, BitConverter, UInt16, ServicePointManager, XmlNodeList, DocumentElement, XmlDocument, XmlReader, SessionfileHeader, XMLParser, Exception, FileStream, GZipStream, REngine, Helper, NumericMatrix, DecoderToolkit, EquidistantSignal, Math, ErrorLogArgs, Parser, SignalMergeException, List, DirectoryInfo, ParallelParser, SessionMetaData, Parser, Writer, FileInfo, Finder, DataValue SignalDataList.SignalDataBuffer, SignalDataList, Debug, DateTime, ICFSystemAddress, DataMonitoringResult, RequestContext, MonitoredItemModifyRequest, MonitoredItemDataHandle, MonitoredItemHandle, NodeAccessInfo},
+	emphstyle={\color{types}},
+	classoffset=1, % starting new class
+	otherkeywords={IEnumerable, IInstrument, IInstrumentError, IExperiment, ICommand, WarningLevel, CompressionMode, IICResourcePropertyValueEditable, IICResourceResult,  ModuleType, PermissionType, RoleScopes},
+	morekeywords={IEnumerable, IInstrument, IInstrumentError, IExperiment, ICommand, WarningLevel, CompressionMode, IICResourcePropertyValueEditable, IICResourceResult,  ModuleType, PermissionType, RoleScopes},
+	keywordstyle=\color{interfacecolor},
+	classoffset=0, % closing new class
+}
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{FFFFFF}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+\lstdefinelanguage{json}{
+	captionpos=b,
+	basicstyle=\ttfamily\footnotesize,
+	numbers=left,
+	numberstyle=\scriptsize,
+	stepnumber=1,
+	numbersep=8pt,
+	showstringspaces=false,
+	breaklines=true,
+	frame=lines,
+	backgroundcolor=\color{background},
+	literate=
+	*{0}{{{\color{numb}0}}}{1}
+	{1}{{{\color{numb}1}}}{1}
+	{2}{{{\color{numb}2}}}{1}
+	{3}{{{\color{numb}3}}}{1}
+	{4}{{{\color{numb}4}}}{1}
+	{5}{{{\color{numb}5}}}{1}
+	{6}{{{\color{numb}6}}}{1}
+	{7}{{{\color{numb}7}}}{1}
+	{8}{{{\color{numb}8}}}{1}
+	{9}{{{\color{numb}9}}}{1}
+	{:}{{{\color{punct}{:}}}}{1}
+	{,}{{{\color{punct}{,}}}}{1}
+	{\{}{{{\color{delim}{\{}}}}{1}
+	{\}}{{{\color{delim}{\}}}}}{1}
+	{[}{{{\color{delim}{[}}}}{1}
+	{]}{{{\color{delim}{]}}}}{1},
+}
+
+%Umlaute in lstlisting
+\lstset{literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+
+\definecolor{pblue}{rgb}{33,33,255}
+\definecolor{pgreen}{rgb}{0,128,0}
+\definecolor{pred}{rgb}{230,0,0}
+\definecolor{pgrey}{rgb}{117,115,122}
+
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily%,
+  %moredelim=[il][\textcolor{pgrey}]{$$},
+  %moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
+\newenvironment{absolutelynopagebreak}
+{\par\nobreak\vfil\penalty0\vfilneg
+	\vtop\bgroup}
+{\par\xdef\tpd{\the\prevdepth}\egroup
+	\prevdepth=\tpd}
+
+
+\setlength{\parindent}{0pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Angaben zur Arbeit
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Autor}{Jan Phillip Metzger}
+\newcommand{\MatrikelNummer}{3029924}
+\newcommand{\Kursbezeichnung}{TINF19B1}
+
+\newcommand{\FirmenName}{Agilent Technologies Deutschland GmbH} %das hier stimmt auch für dich :D
+\newcommand{\FirmenStadt}{Waldbronn}
+\newcommand{\FirmenLogoDeckblatt}{\includegraphics[width=10cm]{img/AgilentLogo}}
+\newcommand{\DHBWLogoDeckblatt}{\includegraphics[width=4cm]{img/dhbw-logo}}
+% Falls es kein Firmenlogo gibt:
+%  \newcommand{\FirmenLogoDeckblatt}{}
+
+\newcommand{\BetreuerFirma}{Uschi Meyer M.Sc; Andreas Bräsen Dipl.-Ing.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Was}{Projektarbeit Praxis I  T1000}
+% Wird auf dem Deckblatt in der Erklärung benutzt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Titel}{Untersuchung zur Anwendung von Analysesoftware in LC Treibern}
+\newcommand{\AbgabeDatum}{28.09.2020}
+
+\newcommand{\Dauer}{2020; KW14-18, KW35-39}
+
+\newcommand{\Abschluss}{Bachelor of Science}
+% \newcommand{\Abschluss}{Bachelor of Science}
+
+\newcommand{\Studiengang}{Informatik}
+
+\newcommand{\Studienrichtung}{Medizinische Informatik}
+% \newcommand{\Studiengang}{Angewandte Informatik}
+
+%hyperhyper
+%howmuchisthefish
+\hypersetup{%%
+	pdfauthor={\Autor},
+	pdftitle={\Titel},
+	pdfsubject={\Was}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Wenn \includeonly{..} benutzt wird, werden nur diese Kaptitel ausgegeben.
+\includeonly{
+	%abstract
+	%,abk 
+	%,content/kapitel1
+	%,content/kapitel2
+	%,content/kapitel3
+	%,content/kapitel4
+	%,content/kapitel5
+	%,content/kapitel6
+	%,kapitel7
+	%,bibliography
+	%,appendix
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+	\begin{center}
+		\vspace*{-2cm}
+		\includegraphics[width=4cm]{img/dhbw-logo}\hfill\FirmenLogoDeckblatt\\[2cm]
+		{\Huge \Titel}\\[1.5cm]
+		{\Huge\scshape \Was}\\[1.5cm]
+		% {\large für die Prüfung zum}\\[0.5cm]
+		% {\Large \Abschluss}\\[0.5cm]
+		{\large des Studienganges \Studiengang Studienrichtung \Studienrichtung}\\[0.5cm]
+		{\large an der}\\[0.5cm]
+		{\large Dualen Hochschule Baden-Württemberg Karlsruhe}\\[0.5cm]
+		{\large von}\\[0.5cm]
+		{\large\bfseries \Autor}\\[0.5cm]
+		{\large Abgabedatum \AbgabeDatum}
+		\vfill
+	\end{center}
+	\begin{tabular}{l@{\hspace{2cm}}l}
+		Bearbeitungszeitraum	         & \Dauer 			\\
+		Matrikelnummer	                 & \MatrikelNummer		\\
+		Kurs			         & \Kursbezeichnung		\\
+		Ausbildungsfirma	         & \FirmenName			\\
+		& \FirmenStadt			\\
+		Betreuer der Ausbildungsfirma	 & \BetreuerFirma		\\
+	\end{tabular}
+\end{titlepage}
+\onehalfspacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{erklaerung.tex}
+
+\newpage
+\tableofcontents           % Inhaltsverzeichnis hier ausgeben
+\listoffigures             % Liste der Abbildungen
+%\listoftables              % Liste der Tabellen
+%\lstlistoflistings         % Liste der Listings
+%\listofequations           % Liste der Formeln
+
+% Jetzt kommt der "eigentliche" Text
+
+%\include{abk}              % Abkürzungsverzeichnis
+%\include{abstract}		   % Abstrakt
+%\include{Zusammenfassung}  % Zusammenfassung -> muss aber erst noch angelegt werden. 
+
+
+\pagenumbering{arabic}
+
+%\include{content/kapitel1}
+%\include{content/kapitel2}
+%\include{content/kapitel3}
+%\include{content/kapitel4}
+%\include{content/kapitel5}
+%\include{content/kapitel6}
+%\include{kapitel7}
+%\include{bibliography}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% BIBLATEX
+% Benutzt man das "biblatex"-Paket, muß man folgendes schreiben:
+%\def\refname{Literaturverzeichnis}
+%\printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\end{document}
+
+

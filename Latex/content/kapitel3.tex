@@ -1,0 +1,26 @@
+% !TeX spellcheck = de_DE
+\chapter{Umsetzung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bilder einfügen und Referenzieren
+
+%       \begin{figure}[]        Bild Umgebung 
+%       \end{figure}
+%       \ref{label}     wird im Text referenziert aber nur die nummer des Bildes
+%                       will man "siehe Abbildung 1.2" dann "siehe Abbildung \ref{label}"
+%       [p]             es gibt auch hier Parameter zur Ausgabe, mit p wird gezwungen spätestens auf der nächsten Seite das Bild/Tabelle auszugeben.
+
+%       \includegraphics[]{}    eingindung des Bildes
+%       [scale = "x"]     verändert die Größe des Bildes anhand des Faktors ( x = 0.5 halb so groß)
+%       {img/Agilent_Long_Signature_RGB}    img Steht für den Ordner, das Bild wird ohne Datei Endung angegeben
+
+%       \figcaption{\label{label} Bild Beschreibung}
+
+\subsection{Wie referenziere ich ein Bild?}
+
+Bla Bla Viel Text hier und da siehst du unser \ac{Agilent} Logo /ref{AgLog}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{img/dhbw-logo.png}
+	\figcaption{\label{AgLog}Das ist unser Agilent Logo}
+\end{figure}
