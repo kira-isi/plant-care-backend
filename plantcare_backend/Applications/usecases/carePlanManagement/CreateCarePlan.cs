@@ -19,11 +19,11 @@ namespace Application.usecases.carePlanManagement
             _plantRepository = plantRepository;
         }
 
-        public async Task<Guid> Execute(CreateCarePlanCommand command)
+        public async Task<Guid> Execute(string name, List<Guid> plants)
         {
-            var carePlan = new CarePlan(command.Name);
+            var carePlan = new CarePlan(name);
 
-            foreach (var plantId in command.PlantIds)
+            foreach (var plantId in plants)
             {
                 var plant = await _plantRepository.GetByIdAsync(plantId);
                 if (plant != null)

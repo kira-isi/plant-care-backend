@@ -10,6 +10,7 @@ namespace Domain.entities
 {
     public abstract class CareTask
     {
+        public Guid Id { get; set; }
         public CareType Type { get; }
         public ICareTaskDetails Details { get; }
 

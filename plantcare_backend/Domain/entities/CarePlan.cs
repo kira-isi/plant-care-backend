@@ -11,14 +11,14 @@ namespace Domain.entities
         public Guid id {get;}
         public String name {get; private set; }
         public List<CareTask> taskList {get; private set; }
-        public List<Plant> plants {get; private set; }
+        public List<Guid> plants {get; private set; }
 
         public CarePlan(String name)
 		{
 			this.id = Guid.NewGuid();
 			this.name = name;
 			this.taskList = new List<CareTask>();
-			this.plants = new List<Plant>();
+			this.plants = new List<Guid>();
 		}
 
         public void addTask(CareTask task)
@@ -26,10 +26,10 @@ namespace Domain.entities
             taskList.Add(task);	
 		}
 
-        public Boolean removeTask(CareTask task) 
+        public void removeTask(Guid taskId) 
 		{ 
-			return taskList.Remove(task);
-		}
+			taskList.RemoveAll(t => t.Id == taskId);
+        }
 
         public void clearTaskList()
 		{
@@ -38,11 +38,11 @@ namespace Domain.entities
 
         public void addPlant(Plant plant) 
 		{
-			plants.Add(plant);
+			plants.Add(plant.PlantID);
 		}
 
-        public void removePlant(Plant plant) {
-			plants.Remove(plant);
+        public void removePlant(Guid plantId) {
+			plants.Remove(plantId);
 		}
 
         public void clearPlants() {
