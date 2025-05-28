@@ -28,13 +28,13 @@ namespace Application.usecases.carePlanManagement
                 var plant = await _plantRepository.GetByIdAsync(plantId);
                 if (plant != null)
                 {
-                    carePlan.addPlant(plant);
+                    carePlan.AddPlant(plant);
                 }
             }
 
             await _carePlanRepository.AddAsync(carePlan);
 
-            return carePlan.id;
+            return carePlan.Id;
         }
     }
 }
