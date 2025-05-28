@@ -11,7 +11,7 @@ namespace Domain.entities
     public class Plant
 	{	
 		public Guid PlantID {get;}
-        public String Name { get;} //optional wird über location und type schon gut definiert
+        public String? Name { get;} //optional wird über location und type schon gut definiert
         public PlantType Type { get;}
         public Location Location { get; private set; }
 
