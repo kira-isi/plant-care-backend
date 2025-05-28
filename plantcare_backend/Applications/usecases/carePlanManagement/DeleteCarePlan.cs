@@ -19,7 +19,7 @@ namespace Application.usecases.carePlanManagement
 
         public async Task<bool> ExecuteAsync(Guid carePlanId)
         {
-            CarePlan plan = await _carePlanRepository.GetByIdAsync(carePlanId);
+            var plan = await _carePlanRepository.GetByIdAsync(carePlanId);
             if (plan == null) return false;
 
             await _carePlanRepository.DeleteAsync(plan);
