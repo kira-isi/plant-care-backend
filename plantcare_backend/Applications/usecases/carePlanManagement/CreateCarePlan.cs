@@ -22,7 +22,16 @@ namespace Application.usecases.carePlanManagement
         public async Task<Guid> Execute(string name, List<Guid> plants)
         {
             var carePlan = new CarePlan(name);
+            this.AddPlantsToPlan(carePlan, plants);
+            
 
+            await _carePlanRepository.AddAsync(carePlan);
+
+            return carePlan.Id;
+        }
+
+        protected async void AddPlantsToPlan(CarePlan carePlan, List<Guid> plants)
+        {
             foreach (var plantId in plants)
             {
                 var plant = await _plantRepository.GetByIdAsync(plantId);
@@ -31,10 +40,6 @@ namespace Application.usecases.carePlanManagement
                     carePlan.AddPlant(plant);
                 }
             }
-
-            await _carePlanRepository.AddAsync(carePlan);
-
-            return carePlan.Id;
         }
     }
 }
