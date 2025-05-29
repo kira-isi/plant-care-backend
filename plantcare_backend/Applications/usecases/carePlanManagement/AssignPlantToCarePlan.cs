@@ -20,13 +20,13 @@ namespace Application.usecases.carePlanManagement
             _plantRepository = plantRepository;
         }
 
-        public async Task<bool> ExecuteAsync(Guid carePlanId, Guid plantId)
+        public async Task<bool> ExecuteAsync(Guid carePlanId, Guid plantId) 
         {
             var carePlan = await _carePlanRepository.GetByIdAsync(carePlanId);
-            if (carePlan == null) return false;
+            if (carePlan == null) throw new CarePlanNotFoundException("Could not find CarePlan");
 
             var plant = await _plantRepository.GetByIdAsync(plantId);
-            if (plant == null) return false;
+			if (plant == null) throw new PlantNotFoundException("Plant not found");
 
             carePlan.AddPlant(plant);
             await _carePlanRepository.UpdateAsync(carePlan);
