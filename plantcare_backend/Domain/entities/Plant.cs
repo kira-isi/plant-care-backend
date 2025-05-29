@@ -24,7 +24,7 @@ namespace Domain.entities
             this.Location = location;
 		}
 
-        public void Relocate(Location newLocation)
+        public void RelocateTo(Location newLocation)
         {
             this.Location = newLocation;
         }
