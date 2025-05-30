@@ -45,7 +45,7 @@ namespace Application.usecases.carePlanManagement
                 return false;
             }
 
-            carePlan.addTask(newTask);
+            carePlan.AddTask(newTask);
             await _carePlanRepository.UpdateAsync(carePlan);
             return true;
         }

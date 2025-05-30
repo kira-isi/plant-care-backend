@@ -19,7 +19,7 @@ namespace Application.usecases.plantManagment
         public async Task<bool> ExecuteAsync(Guid plantId)
         {
             var allPlans = await _carePlanRepository.GetAllAsync();
-            return !allPlans.Any(plan => plan.plants.Contains(plantId));
+            return !allPlans.Any(plan => plan.Plants.Contains(plantId));
         }
     }
 }

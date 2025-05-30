@@ -8,51 +8,51 @@ namespace Domain.entities
 {
     public class CarePlan
 	{
-        public Guid id {get;}
-        public String name {get; private set; }
-        public List<CareTask> taskList {get; private set; }
-        public List<Guid> plants {get; private set; }
+        public Guid Id {get;}
+        public String Name {get; private set; }
+        public List<CareTask> TaskList {get; private set; }
+        public List<Guid> Plants {get; private set; }
 
         public CarePlan(String name)
 		{
-			this.id = Guid.NewGuid();
-			this.name = name;
-			this.taskList = new List<CareTask>();
-			this.plants = new List<Guid>();
+			this.Id = Guid.NewGuid();
+			this.Name = name;
+			this.TaskList = new List<CareTask>();
+			this.Plants = new List<Guid>();
 		}
 
-        public void addTask(CareTask task)
+        public void AddTask(CareTask task)
 		{
-            taskList.Add(task);	
+            TaskList.Add(task);	
 		}
 
-        public void removeTask(Guid taskId) 
+        public void RemoveTask(Guid taskId) 
 		{ 
-			taskList.RemoveAll(t => t.Id == taskId);
+			TaskList.RemoveAll(t => t.Id == taskId);
         }
 
-        public void clearTaskList()
+        public void ClearTaskList()
 		{
-            taskList.Clear();
+            TaskList.Clear();
 		}
 
-        public void addPlant(Plant plant) 
+        public void AddPlant(Plant plant) 
 		{
-			plants.Add(plant.PlantID);
+			Plants.Add(plant.PlantID);
 		}
 
-        public void removePlant(Guid plantId) {
-			plants.Remove(plantId);
+        public void RemovePlant(Guid plantId) {
+			Plants.Remove(plantId);
 		}
 
-        public void clearPlants() {
-			plants.Clear();
+        public void ClearPlants() {
+			Plants.Clear();
 		}
 
         public List<CareTask> GetDueActions()
         {
             List<CareTask> actionsDue = new List<CareTask>();
-			foreach (CareTask task in this.taskList)
+			foreach (CareTask task in this.TaskList)
 			{
 				if (task.IsDue())
 				{
@@ -66,7 +66,7 @@ namespace Domain.entities
         public List<CareTask> GetOverdueActions()
         {
             List<CareTask> actionsOverdue = new List<CareTask>();
-            foreach (CareTask task in this.taskList)
+            foreach (CareTask task in this.TaskList)
             {
                 if (task.IsOverdue())
                 {

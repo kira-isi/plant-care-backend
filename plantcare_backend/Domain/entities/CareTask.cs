@@ -16,7 +16,7 @@ namespace Domain.entities
 
         public CareTask(CareType type, ICareTaskDetails details)
         {
-            if (!MatchesDetailsType(type, details))
+            if (!type.Matches(details))
                 throw new ArgumentException($"Invalid details type for care type {type.ToString()}");
 
             Type = type;
@@ -28,16 +28,17 @@ namespace Domain.entities
 
         public abstract void MarkAsPerformed();
 
-        public static bool MatchesDetailsType(CareType type, ICareTaskDetails details)
-        {
-            return type switch
-            {
-                CareType.Watering => details is WateringDetails,
-                CareType.Fertilizing => details is FertilizingDetails,
-                CareType.Repotting => true, // falls keine Details nötig
-                CareType.Pruning => true,
-                _ => false
-            };
-        }
+        //obsolete durch polymorphieanpassung in CareType
+        //public static bool MatchesDetailsType(CareType type, ICareTaskDetails details)
+        //{
+        //    return type switch
+        //    {
+        //        CareType.Watering => details is WateringDetails,
+        //        CareType.Fertilizing => details is FertilizingDetails,
+        //        CareType.Repotting => true, // falls keine Details nötig
+        //        CareType.Pruning => true,
+        //        _ => false
+        //    };
+        //}
     }
 }
