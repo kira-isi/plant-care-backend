@@ -10,11 +10,18 @@ namespace entities
     {
         public Guid Id { get; }
         public string Name { get; }
-        public string Description { get; }
+        public string? Description { get; }
 
-        public Location(string name, string description)
+        public Location(string name, string? description)
         {
             Id = Guid.NewGuid();
+            Name = name;
+            Description = description;
+        }
+
+        public Location(Guid id, string name, string? description)
+        {
+            Id = id;
             Name = name;
             Description = description;
         }

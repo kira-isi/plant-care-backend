@@ -15,6 +15,12 @@ namespace Domain
 
         public static CareTask CreateRecurring(CareType type, ICareTaskDetails details, TimeSpan interval)
             => new RecurringCareTask(type, details, interval);
+
+        public static CareTask CreateScheduled(CareType type, ICareTaskDetails details, DateTime date, bool isCompleted)
+            => new ScheduledCareTask(type, details, date, isCompleted);
+
+        public static CareTask CreateRecurring(CareType type, ICareTaskDetails details, TimeSpan interval, DateTime lastPerformed)
+            => new RecurringCareTask(type, details, interval, lastPerformed);
     }
 
 }

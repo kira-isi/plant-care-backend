@@ -8,12 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Adapters\1_Adapters.csproj" />
-    <ProjectReference Include="..\Applications\2_Application.csproj" />
-    <ProjectReference Include="..\Domain\3_Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="controllers\" />
   </ItemGroup>
 
 </Project>

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.usecases.locationManagment
 {
-    public class GetAllLocations
+    public class GetAllLocation
     {
         private readonly ILocationRepository _locationRepository;
 
-        public GetAllLocations(ILocationRepository locationRepository)
+        public GetAllLocation(ILocationRepository locationRepository)
         {
             _locationRepository = locationRepository;
         }

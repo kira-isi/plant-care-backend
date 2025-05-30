@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.usecases.locationManagment
 {
-    public class CreateLocation
+    public class CreatePlantType
     {
         private readonly ILocationRepository _locationRepository;
 
-        public CreateLocation(ILocationRepository locationRepository)
+        public CreatePlantType(ILocationRepository locationRepository)
         {
             _locationRepository = locationRepository;
         }

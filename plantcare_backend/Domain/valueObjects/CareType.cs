@@ -10,7 +10,7 @@ namespace Domain.valueObjects
     {
         Watering,
         Fertilizing,
-        Repotting,
-        Pruning,
+        //Repotting,
+        //Pruning,
     }
 }

@@ -18,6 +18,13 @@ namespace Domain.entities
             ScheduledDate = scheduledDate;
         }
 
+        public ScheduledCareTask(CareType type, ICareTaskDetails details, DateTime scheduledDate, bool isCompleted)
+            : base(type, details)
+        {
+            ScheduledDate = scheduledDate;
+            IsCompleted = isCompleted;
+        }
+
         public override bool IsDue()
         {
             return !IsCompleted && DateTime.Today == ScheduledDate.Date;
