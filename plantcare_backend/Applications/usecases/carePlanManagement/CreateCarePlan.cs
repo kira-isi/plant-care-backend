@@ -21,25 +21,25 @@ namespace Application.usecases.carePlanManagement
 
         public async Task<Guid> Execute(string name, List<Guid> plants)
         {
-            var carePlan = new CarePlan(name);
-            this.AddPlantsToPlan(carePlan, plants);
+            var carePlan = await CreateNewCarePlanAndAddPlants(name,plants);
             
-
             await _carePlanRepository.AddAsync(carePlan);
 
             return carePlan.Id;
         }
 
-        protected async void AddPlantsToPlan(CarePlan carePlan, List<Guid> plants)
-        {
-            foreach (var plantId in plants)
-            {
-                var plant = await _plantRepository.GetByIdAsync(plantId);
-                if (plant != null)
-                {
-                    carePlan.AddPlant(plant);
-                }
-            }
+		protected async Task<CarePlan> CreateNewCarePlanAndAddPlants(string name, List<Guid> plants)
+		{
+			CarePlan carePlan = new CarePlan(name);
+			foreach (var plantId in plants)
+			{
+				var plant = await _plantRepository.GetByIdAsync(plantId);
+				if (plant != null)
+				{
+					carePlan.AddPlant(plant);
+				}
+			}
+			return carePlan;
         }
     }
 }
