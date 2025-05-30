@@ -25,7 +25,7 @@ namespace Application.usecases.carePlanManagement
             var plant = await _plantRepository.GetByIdAsync(plantId);
             if (plant == null) return false;
 
-            plan.removePlant(plant);
+            plan.removePlant(plant.Id);
             await _carePlanRepository.UpdateAsync(plan);
             return true;
         }

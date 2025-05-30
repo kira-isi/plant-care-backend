@@ -21,7 +21,7 @@ namespace Application.usecases.carePlanManagement
             var carePlan = await _carePlanRepository.GetByIdAsync(carePlanId);
             if (carePlan == null) return false;
 
-            var task = carePlan.taskList.FirstOrDefault(t => t.Id == taskId);
+            var task = carePlan.TaskList.FirstOrDefault(t => t.Id == taskId);
             if (task == null) return false;
 
             task.MarkAsPerformed();

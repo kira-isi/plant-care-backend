@@ -31,7 +31,7 @@ namespace Application.usecases
                 if (!due.Any() && !overdue.Any())
                     continue;
 
-                message += $"Pflegeplan „{plan.name}“ hat {due.Count} fällige Aufgabe(n) und {overdue.Count} überfällige Aufgabe(n).";
+                message += $"Pflegeplan „{plan.Name}“ hat {due.Count} fällige Aufgabe(n) und {overdue.Count} überfällige Aufgabe(n).";
             }
             await _notificationService.SendNotificationToAllAsync("Heutiger Planzen-Bericht", message);
         }

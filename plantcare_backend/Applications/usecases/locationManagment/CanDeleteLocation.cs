@@ -19,7 +19,7 @@ namespace Application.usecases.locationManagment
         public async Task<bool> ExecuteAsync(Guid locationId)
         {
             var allPlants = await _plantRepository.GetAllAsync();
-            return !allPlants.Any(p => p.LocationId.Id == locationId);
+            return !allPlants.Any(p => p.LocationId == locationId);
         }
     }
 }

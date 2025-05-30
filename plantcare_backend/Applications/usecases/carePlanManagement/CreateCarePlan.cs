@@ -34,7 +34,7 @@ namespace Application.usecases.carePlanManagement
 
             await _carePlanRepository.AddAsync(carePlan);
 
-            return carePlan.id;
+            return carePlan.Id;
         }
     }
 }
