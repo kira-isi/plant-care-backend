@@ -16,7 +16,7 @@ namespace Domain.entities
 
         public CareTask(CareType type, ICareTaskDetails details)
         {
-            if (type.Matches(details))
+            if (!type.Matches(details))
                 throw new ArgumentException($"Invalid details type for care type {type.ToString()}");
 
             Type = type;
