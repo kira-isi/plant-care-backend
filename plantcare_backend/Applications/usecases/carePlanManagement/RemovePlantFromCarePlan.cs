@@ -15,6 +15,7 @@ namespace Application.usecases.carePlanManagement
         public RemovePlantFromCarePlan(ICarePlanRepository carePlanRepository, IPlantRepository plantRepository)
         {
             _carePlanRepository = carePlanRepository;
+            _plantRepository = plantRepository;
         }
 
         public async Task<bool> ExecuteAsync(Guid carePlanId, Guid plantId)
@@ -25,7 +26,7 @@ namespace Application.usecases.carePlanManagement
             var plant = await _plantRepository.GetByIdAsync(plantId);
             if (plant == null) return false;
 
-            plan.removePlant(plant.Id);
+            plan.RemovePlant(plant.PlantID);
             await _carePlanRepository.UpdateAsync(plan);
             return true;
         }

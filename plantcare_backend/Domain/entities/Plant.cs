@@ -32,7 +32,7 @@ namespace Domain.entities
             this.LocationId = locationId;
         }
 
-        public void Relocate(Guid newLocationId)
+        public void RelocateTo(Guid newLocationId)
         {
             this.LocationId = newLocationId;
         }

@@ -22,7 +22,7 @@ namespace Application.usecases.plantManagment
             var plant = await _plantRepository.GetByIdAsync(plantId);
             if (plant == null) return false;
 
-            plant.Relocate(newLocation.Id);
+            plant.RelocateTo(newLocation);
             await _plantRepository.UpdateAsync(plant);
             return true;
         }

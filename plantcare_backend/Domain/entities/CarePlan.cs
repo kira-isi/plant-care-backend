@@ -29,31 +29,31 @@ namespace Domain.entities
             this.Plants = plants;
         }
 
-        public void addTask(CareTask task)
+        public void AddTask(CareTask task)
 		{
             TaskList.Add(task);	
 		}
 
-        public void removeTask(Guid taskId) 
+        public void RemoveTask(Guid taskId) 
 		{ 
 			TaskList.RemoveAll(t => t.Id == taskId);
         }
 
-        public void clearTaskList()
+        public void ClearTaskList()
 		{
             TaskList.Clear();
 		}
 
-        public void addPlant(Plant plant) 
+        public void AddPlant(Plant plant) 
 		{
 			Plants.Add(plant.Id);
 		}
 
-        public void removePlant(Guid plantId) {
+        public void RemovePlant(Guid plantId) {
 			Plants.Remove(plantId);
 		}
 
-        public void clearPlants() {
+        public void ClearPlants() {
 			Plants.Clear();
 		}
 

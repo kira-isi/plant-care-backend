@@ -21,7 +21,7 @@ namespace Application.usecases.carePlanManagement
             var carePlan = await _carePlanRepository.GetByIdAsync(carePlanId);
             if (carePlan == null) return false;
 
-            carePlan.removeTask(taskId);
+            carePlan.RemoveTask(taskId);
             await _carePlanRepository.UpdateAsync(carePlan);
             return true;
         }

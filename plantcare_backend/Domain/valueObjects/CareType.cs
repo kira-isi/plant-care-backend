@@ -6,11 +6,38 @@ using System.Threading.Tasks;
 
 namespace Domain.valueObjects
 {
-    public enum CareType
+    public abstract class CareType
     {
-        Watering,
-        Fertilizing,
-        //Repotting,
-        //Pruning,
+       public abstract bool Matches(ICareTaskDetails detail);
     }
+
+    public class Watering : CareType
+    {
+		public override bool Matches(ICareTaskDetails detail)
+		{
+			return detail is Watering;
+		}
+	}
+
+    public class Fertilizing : CareType
+    {
+		public override bool Matches(ICareTaskDetails detail)
+		{
+			return detail is Fertilizing;
+		}
+	}
+
+    public class Repotting : CareType {
+		public override bool Matches(ICareTaskDetails detail)
+		{
+			return detail is Repotting;
+		}
+	}
+    public class Pruning : CareType {
+		public override bool Matches(ICareTaskDetails detail)
+		{
+			return detail is Pruning;
+		}
+	}
+
 }
