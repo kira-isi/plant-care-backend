@@ -1,4 +1,5 @@
 ﻿using Application.repositoryInterfaces;
+using Domain.entities;
 using entities;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,18 @@ namespace Application.usecases.locationManagment
 {
     public class CreatePlantType
     {
-        private readonly ILocationRepository _locationRepository;
+        private readonly IPlantTypeRepository _plantTypeRepository;
 
-        public CreatePlantType(ILocationRepository locationRepository)
+        public CreatePlantType(IPlantTypeRepository plantTypeRepository)
         {
-            _locationRepository = locationRepository;
+            _plantTypeRepository = plantTypeRepository;
         }
 
-        public async Task<Guid> ExecuteAsync(string name, string? description)
+        public async Task<Guid> ExecuteAsync(string name, int requiredWaterAmountMl, int weeklyWateringTimes, bool needsDirectSunlight)
         {
-            var location = new Location(name, description);
-            await _locationRepository.AddAsync(location);
-            return location.Id;
+            var plantType = new PlantType(name, requiredWaterAmountMl, weeklyWateringTimes, needsDirectSunlight);
+            await _plantTypeRepository.AddAsync(plantType);
+            return plantType.Id;
         }
     }
 }

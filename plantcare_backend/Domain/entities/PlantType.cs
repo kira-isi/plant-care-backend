@@ -14,6 +14,15 @@ namespace Domain.entities
         public int WeeklyWateringTimes { get; }
         public bool NeedsDirectSunlight { get; }
 
+        public PlantType(string name, int requiredWaterAmountMl, int weeklyWateringTimes, bool needsDirectSunlight)
+        {
+            this.Id = new Guid();
+            this.Name = name;
+            this.RequiredWaterAmountMl = requiredWaterAmountMl;
+            this.WeeklyWateringTimes = weeklyWateringTimes;
+            this.NeedsDirectSunlight = needsDirectSunlight;
+        }
+
         public PlantType(Guid Id, string name, int requiredWaterAmountMl, int weeklyWateringTimes, bool needsDirectSunlight)
         {
             this.Id = Id;
