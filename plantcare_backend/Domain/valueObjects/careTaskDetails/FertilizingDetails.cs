@@ -12,5 +12,11 @@ namespace Domain.valueObjects.careTaskDetails
         public string Dosage { get; set; } //freitext weil für den Nutzer angenehm z.B. eine Kappe, zwei Löffel
 
         public string Summary => $"{FertilizerName} – {Dosage}";
+
+        public FertilizingDetails(string fertilizerName, string dosage)
+        {
+            FertilizerName = fertilizerName;
+            Dosage = dosage;
+        }
     }
 }

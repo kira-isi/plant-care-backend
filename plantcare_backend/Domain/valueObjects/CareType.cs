@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.valueObjects.careTaskDetails;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Domain.valueObjects
     {
 		public override bool Matches(ICareTaskDetails detail)
 		{
-			return detail is Watering;
+			return detail is WateringDetails;
 		}
 	}
 
@@ -23,20 +24,20 @@ namespace Domain.valueObjects
     {
 		public override bool Matches(ICareTaskDetails detail)
 		{
-			return detail is Fertilizing;
+			return detail is FertilizingDetails;
 		}
 	}
 
     public class Repotting : CareType {
 		public override bool Matches(ICareTaskDetails detail)
 		{
-			return detail is Repotting;
+			return detail is DummyDetails;
 		}
 	}
     public class Pruning : CareType {
 		public override bool Matches(ICareTaskDetails detail)
 		{
-			return detail is Pruning;
+			return detail is DummyDetails;
 		}
 	}
 
