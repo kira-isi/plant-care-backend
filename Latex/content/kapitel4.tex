@@ -3,36 +3,36 @@
 
 Im Zuge des Refactoring wurde zuerst einmal ein code review durchgeführt. Dabei wurde der gesamte erstellte Code im Repository einmal „mit dem Auge“ auf Auffälligkeiten geprüft, danach ein zweites Mal mit einer Checklist, die Anhand der Vorlesung erstellt wurde. Diese Checkliste beinhaltete die besprochenen Code Smell Beispiele, konkret Duplicated Code, Long Method, large Class, Shotgun Surgery, Switch Statements, Code Comments, geprüft.
 Hierbei wurden mehrere, zumeist kleinere Stellen identifiziert, bei denen Ausbesserungsbedarf bestand. Bei diesen Findings handelte es sich um Code Smell Fälle, die wir bereits konkret in der Vorlesung behandelt hatten:
-\subsection*{}
+
 \begin{enumerate}
 \item Es wurde ein Switch-Statement für die Identifizierung eines Enums verwendet
 \item In einem Konkreten Fall eine Methode mit auslagerbarem Code identifiziert („Long Method“)
 \item Execute Methoden der Use Cases beinhalteten Error Return Werte
 \item Viel ähnlicher Code in Use Case Definitionen
 \end{enumerate}
-\subsection*{}
+
 Bei weiteren waren minimale Optimierungen anderer Aspekte gefragt, um den Code etwas ausbessern und lesbarer zu machen:
-\subsection*{}
+
 \begin{enumerate}
 \item[a.] Manche Methodennamen hielten sich nicht an die gängigen C\# Benennungskonventionen (hauptsächlich Großschreibung) oder waren im Sinne des Domain Driven Designs nicht optimal benannt
 \item[b.] Manche Variablen konnten den Wert NULL annehmen, waren aber nicht entsprechend konfiguriert
 \item[c.] Inkonsistente Variableninitialisierung in Use Cases
 \end{enumerate}
-\subsection*{}
+
 Diese Findings nach der Identifizierung in einem neuen Zweig des Repositories jeweils einzeln bearbeitet.
 \par
 Im ersten Finding wurde im Konstruktor der Klasse CareTask eine statische Methode MatchesDetailsType zum identifizieren des Task Typen eines Objektes einer Klasse, die aus dem Interface ICareTaskDetails, also eine detaillierte Pflegeaufgabe. Die Statische Methode verwendete dabei einen Switch Case und iterierte über den Enum-Typen CareType und den passenden Typen der Variable type zu finden. Dabei handelt es sich um ein gutes Besipiel des Code Smells Switch Statements, und damit im einen Shotgun Surgery Smell im erweiterten Sinne. Wird das Enum erweitert, so muss der Entwickler auch wissen, dass dieses Switch Statement exisitert und das er erweitert werden muss, sonst baut ein unwissender Entwickler eine Fehlerquelle in den Code. Um eben nicht bei jeder Erweiterung des Enums CareType auch das Switch Statement der MatchesDetailsType erweitern zu müssen, muss hier deshalb eine Änderung vorgenommen werden.  Der Klassische Lösungsansatz solcher Problematiken ist dabei das Nutzen von Polymorphie um das Switch Statement als Conditional zu ersetzen. Dies wurde auch hier angewandt. 
 \par
 Dafür wurde das Enum aufgelöst, und jedes Element des Enum zu einer eigenen Klasse umgeschrieben, die alle von einer abstakten ParentKlasse CareType erben. Diese bekommt eine abstrakte Methode Matches zugeordnet, die alle Children implementieren. Dabei wird der CareType des übergebenen Arguments von Typ ICareTaskDetails auf Gleichheit mit dem jeweils eigenen Typen geprüft. So muss in der Kontruktor von CareTask nurnoch vom übergebenen Argument type des Typen CareType die matches methode auf das andere Argument details aufrufen und erhält dasselbe Ergebnis wie zuvor. Wird ein neuer CareType hinzugefügt, muss dies aber nur noch an einer Stelle gemacht werden und der Entwickler braucht keine Kenntnis mehr über die Existens des Switch Cases in der Klasse CareTask.
-\subsection*{}
+
 Im zweiten Finding wurde im Use Case CreateCarePlan, in der Execute Methode über eine übergebene Liste von PflanzenIDs iteriert, die korrespondierenden Objekte aus einem Repository-Objekt entnommen und dem CarePlan hinzugefügt. Hierbei handelt es sich um einen Long Method Smell (im engeren Sinne auch um ein Code Comments Smell, da der Block logisch getrennt vom Rest des Methodencodes ist; allerdings gab es hier keine Abtrennung per Kommentar, also trifft der Smell eventuell nicht 100\% zu). Zur Lösung dieses Smells wurde die sogenannte „Extract Method“-Lösung angewandt. 
 \par
 Dazu wurde der Code aus der Methode heraus separiert und in eine eigene Methode ausgelagert, die mit dem Keyword protected versehen wird, um nur klasseninterne Zugriffe zuzulassen. Der Name der neuen Methode wurde so gewählt, dass das Lesen der Methode Execute im Sinne des Domain Driven Designs möglichst umkompliziert und in der ubiquitous language bleibt. So entstand die Methode FillCarePlanWithPlants, die als Argumente einen CarePlan und eine Liste von PlantIDs erwartet, das Heraussuchen der Pflanzen aus dem Repository übernimmt und den CarePlan damit auffüllt. Anschließend wird der aufgefüllte CarePlan zurückgegeben. 
-\subsection*{}
+
 Beim dritten Finding wurde identifiziert, dass viele UseCases, die entweder etwas Löschen oder Ändern sollen, bei einer fehlgeschlagenden Suche des jeweiligen Objektes aus einem Repository als Return-Wert false übergeben, was äquivalent zu einem Fehler angesehen werden kann.  Diese können allerdings auch direkt als Fehler identifiziert und über eine Exception handgehabt werden. Dafür wurde beispielsweise in der ExecuteAsync Methode der use case Klasse AssignPlantToCarePlan eine solche sogenannte „Replace Error Code with Exception“ Lösung umgesetzt. Hierfür wurden neue Exceptions im Domain Code erstellt. Dafür wurde zuerst die Parent Exception NotFoundException kreeirt, und dann die beien Children Exceptions CarePlanNotFoundException und PlantNotFoundException. Diese können dann anstelle einer Wiedergabe von false implmenetiert werden und können durch Ausgabe einer Fehlermeldung über das Argument message verboser das eigentliche Problem beim Ausführen der Methode ansprechen. Diese Implementation könnte auch in Use Case Klassen wie DeleteCarePlan und DeleteTaskFromCarePlan implementiert werden, da auch dort der Fall auftritt, bei nicht-Finden des zu Entfernenden Objektes der Wert false zurückgegeben wird.
-\subsection*{}
+
 Im vierten Finding wurde Identifiziert, dass sich der Code, gerade in den Execute bzw ExecuteAsync Methoden vieler Use Cases ähneln. Bei näherer Betrachtung sind diese Methoden allerdings immer leicht unterschiedlich, und sich überschneidende Teile sind minimal. Deshalb wurde von einer Optimierung beispielsweise im Sinne einer Extraktion von Code abgesehen. Da diese wahrscheinlich nur wenige Zeilen code beinhalten und auch beim Leseverständnis nicht unbedingt weiterhelfen würden. Ein weiterer Gedanke zur Optimierung wäre eventuell eine Vererbung, die die Überlappenden Teile in einer Parent Klasse übernimmt. Aber auch hier konnte im Zuge des Refactorings keine zufriedenstellende Umsetzung gefunden werden, die den Code optimiert und das Leseverständnis nicht beeinträchtigt.
-\subsection*{}
+
 Bezüglich der kleineren Findings wurde in Finding a bemerkt, dass manche Methoden der CarePlan Klasse mit Kleinbuchstaben beginnen. Konvention bei C\# ist allerdings, Methoden mit Großbuchstaben beginnen zu lassen, was ein kleines Renaming Refactoring zur Folge hatte. Dies gilt dabei auch für Attribute von Klassen, die Getter und Setter definieren.
 \par
 Zu Finding b lässt sich sagen, dass es in C\# best practice ist, eine Variable, die auch den Wert NULL annehmen können soll, entsprechend zu konfigurieren. Entweder, wenn die Variable gleich mit Inhalt befüllt wird, kann das Keyword var anstatt eines Variablentypen eingesetzt werden. Der Compiler prüft dann auf den Typen der befüllt werden soll, und konfiguriert automatisch die Nullbarkeit der Variable. Dies kann aber auch manuell umgesetzt werden, indem hinter das Keyword des Variablentypen ein Fragezeichen gesetzt wird. So weiß der Compiler, dass für diese Variable auch NULL ein gültiger Wert sein kann.

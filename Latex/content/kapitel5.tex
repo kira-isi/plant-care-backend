@@ -3,23 +3,23 @@
 
 Im Sinne der Programming Principles wird hauptsäch Wert auf die Bewertung der SOLID und DRY Prinzipien, sowie die Kopplung und Kohäsion des GRASP Prinzips gelegt.
 
-\subsection*{SOLID Prinzipien}
+\section{SOLID Prinzipien}
 Das SOLID Prinzip schreibt durch sein Akronym folge Prinzipien vor:
-\subsubsection*{Single Responsibility Principle (SRP)}
+\subsection{Single Responsibility Principle (SRP)}
 Das SOLID Prinzip schreibt durch sein Akronym folge Prinzipien vor:
-\subsubsection*{Open/Closed Principle (OCP)}
+\subsection{Open/Closed Principle (OCP)}
 Alle Klassen legen Wert darauf, möglichst offen einzelne Typenprüfungen zu gestalten, sodass nirgends starre Gebilde (wie zum beispiel über Enums iterierende If-Schlangen) aufkommen (siehe auch Refactoring des Switch Statements).
-\subsubsection*{Liskov Substitution Principle (LSP)}
+\subsection{Liskov Substitution Principle (LSP)}
 Der Code stützt sich viel auf Vererbung von Klassen als Erweiterung von Eigenschaften. Dabei wurde nicht immer darauf geachtet, ob das Liskov Substitution Prinzip verletzt wird. Im Zuge des Refactoring ist allerdings kein solcher Fall erkannt worden. Grundsätzlich wurde aber im Sinne des LSP entwickelt, sodass keine Spezialisierung durch Vererbung eine Generalisierung invalidiert. Übertypen, also Parent Klassen, sollten immer genau so anwendbar sein, wie ihre Children, sollten sie dort gefragt sein.
-\subsubsection*{Interface Segregation Principle (ISP)}
+\subsection{Interface Segregation Principle (ISP)}
 Dieses Prinzip wurde bei den Repositories konkret umgesetzt, da dort durch Vererbung spezialisierte Typen von Interfaces entstehen.
-\subsubsection*{Dependency Inversion Principle (DIP)}
+\subsection{Dependency Inversion Principle (DIP)}
 Auch hier kommen die Repository-Interfaces ins Spiel. Sie dienen dazu, die Adapterschicht mit der Applikationsschicht interargieren zu lassen, ohne direkten Zugriff zu erhalten. Adapter können die Interfaces benutzen um ihre generierten Daten in die Applikationsschicht, spezifisch in Use Cases, zu übergeben und deren spezialisierte Arbeitsweise zu nutzen.
 
-\subsection*{DRY Prinzip}
+\section{DRY Prinzip}
 Es wurde bei der Entwicklung bereits stark darauf geachtet, Code möglichst nur einmal zu verfassen, und bei Wiederholungen zu schauen, ob nicht eventuell der bereits bestehende Code ausgelagert werden kann. Zusätzlich wurde während des Refactoring nochmal in den Use Cases ein solcher Code Smell identifiziert und auch beschrieben, allerdings konnte keine gute Lösung zur Behebung gefunden werden, da die ich wiederholenden Stellen gespickt mit kleinen unterscheiden sind. Dies macht eine Extraktion in ausgelagerte Methoden kompliziert.
-\subsection*{Kopplung und Kohäsion}
-\subsubsection*{Kopplung}
+\section{Kopplung und Kohäsion}
+\subsection{Kopplung}
 Eine relativ geringe Kopplung erreicht wurde bereits durch das Anwenden der Clean Architecture, die die Einzelnen Schichten voneinander trennt und Möglichkeiten zur Interaktion bietet, ohne die Kopplung zu erhöhen. Auch die Nutzung der Dependency Inversion trägt hierzu bei.
-\subsubsection*{Kohäsion}
+\subsection{Kohäsion}
 Hier besteht bestimmt noch Optimierungsbedarf, da beim Entwickeln der Klassen, besonders der Entitäten darauf nicht besonders geachtet wurde. Jedoch sind alle Entitäten in ihrer Größre relativ gering, was eigentlich ein Zeichen guter Kohäsion ist. 
