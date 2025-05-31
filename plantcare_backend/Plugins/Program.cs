@@ -7,7 +7,10 @@ using Application.usecases.locationManagment;
 using Domain.entities;
 
 // Verbindung & Repositories
-IDbConnection connection = new SQLiteConnection("Data Source=plantcare.db");
+var dbPath = Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\plant-care.db");
+Console.WriteLine($"Verwende Datenbank: {dbPath}");
+IDbConnection connection = new SQLiteConnection($"Data Source={dbPath}");
+
 connection.Open();
 
 var locationRepo = new SqlLocationRepository(connection);

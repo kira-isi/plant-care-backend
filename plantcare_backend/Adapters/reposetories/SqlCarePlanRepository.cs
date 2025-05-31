@@ -34,14 +34,13 @@ namespace Adapters.reposetories
 
             foreach (var row in tasksOut)
             {
-                CareType type = Enum.Parse<CareType>((string)row.CareType);
-
+                CareType type = CareTypeFactory.FromString((string)row.CareType);
                 ICareTaskDetails details = type switch
                 {
-                    CareType.Watering => JsonSerializer.Deserialize<WateringDetails>((string)row.DetailsJson)
+                    Watering => JsonSerializer.Deserialize<WateringDetails>((string)row.DetailsJson)
                         ?? throw new InvalidOperationException("Deserialization of WateringDetails returned null."),
 
-                    CareType.Fertilizing => JsonSerializer.Deserialize<FertilizingDetails>((string)row.DetailsJson)
+                    Fertilizing => JsonSerializer.Deserialize<FertilizingDetails>((string)row.DetailsJson)
                         ?? throw new InvalidOperationException("Deserialization of FertilizingDetails returned null."),
 
                     _ => throw new InvalidOperationException($"Unsupported care type {type}")
@@ -92,13 +91,12 @@ namespace Adapters.reposetories
                     .Where(t => (string)t.CarePlanId == planId.ToString())
                     .Select(row =>
                     {
-                        CareType type = Enum.Parse<CareType>((string)row.CareType);
-
+                        CareType type = CareTypeFactory.FromString((string)row.CareType);
                         ICareTaskDetails details = type switch
                         {
-                            CareType.Watering => JsonSerializer.Deserialize<WateringDetails>((string)row.DetailsJson)
+                            Watering => JsonSerializer.Deserialize<WateringDetails>((string)row.DetailsJson)
                                 ?? throw new InvalidOperationException("Deserialization of WateringDetails returned null."),
-                            CareType.Fertilizing => JsonSerializer.Deserialize<FertilizingDetails>((string)row.DetailsJson)
+                            Fertilizing => JsonSerializer.Deserialize<FertilizingDetails>((string)row.DetailsJson)
                                 ?? throw new InvalidOperationException("Deserialization of FertilizingDetails returned null."),
                             _ => throw new InvalidOperationException($"Unsupported care type {type}")
                         };
@@ -129,23 +127,23 @@ namespace Adapters.reposetories
         {
             // 1. CarePlan einfügen
             const string sql = "INSERT INTO CarePlan (CarePlanId, Name) VALUES (@Id, @Name)";
-            await _connection.ExecuteAsync(sql, new { Id = plan.id, Name = plan.name });
+            await _connection.ExecuteAsync(sql, new { Id = plan.Id.ToString(), Name = plan.Name });
 
             // 2. Pflanzen zuordnen
-            foreach (var plantId in plan.plants)
+            foreach (var plantId in plan.Plants)
             {
                 await _connection.ExecuteAsync(
                     "UPDATE Plants SET CarePlanId = @CarePlanId WHERE Id = @Id",
-                    new { CarePlanId = plan.id, Id = plantId });
+                    new { CarePlanId = plan.Id, Id = plantId });
             }
 
             // 3. Tasks einfügen
-            foreach (var task in plan.taskList)
+            foreach (var task in plan.TaskList)
             {
                 var common = new
                 {
-                    Id = task.Id,
-                    CarePlanId = plan.id,
+                    Id = task.Id.ToString(),
+                    CarePlanId = plan.Id,
                     Type = task.Type.ToString(),
                     DetailsJson = JsonSerializer.Serialize(task.Details)
                 };
@@ -158,8 +156,8 @@ namespace Adapters.reposetories
                     VALUES (@Id, @CarePlanId, @Type, @DetailsJson, @IntervalDays, @LastPerformed)",
                         new
                         {
-                            common.Id,
-                            common.CarePlanId,
+                            Id = common.Id.ToString(),
+                            CarePlanId = common.CarePlanId.ToString(),
                             common.Type,
                             common.DetailsJson,
                             IntervalDays = (int)recurring.Interval.TotalDays,
@@ -194,9 +192,9 @@ namespace Adapters.reposetories
 
         public async Task DeleteAsync(CarePlan plan)
         {
-            await _connection.ExecuteAsync("DELETE FROM CareTasks WHERE CarePlanId = @Id", new { Id = plan.id });
-            await _connection.ExecuteAsync("UPDATE Plants SET CarePlanId = NULL WHERE CarePlanId = @Id", new { Id = plan.id });
-            await _connection.ExecuteAsync("DELETE FROM CarePlans WHERE Id = @Id", new { Id = plan.id });
+            await _connection.ExecuteAsync("DELETE FROM CareTasks WHERE CarePlanId = @Id", new { Id = plan.Id });
+            await _connection.ExecuteAsync("UPDATE Plants SET CarePlanId = NULL WHERE CarePlanId = @Id", new { Id = plan.Id });
+            await _connection.ExecuteAsync("DELETE FROM CarePlans WHERE Id = @Id", new { Id = plan.Id });
         }
 
         public Task<IEnumerable<CarePlan>> GetPlansWithDueAsync() =>

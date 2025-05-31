@@ -28,7 +28,7 @@ namespace Adapters.reposetories
 
             await _connection.ExecuteAsync(sql, new
             {
-                Id = plant.Id,
+                Id = plant.Id.ToString(),
                 Name = plant.Name,
                 PlantType = plant.PlantTypeId,
                 Location = plant.LocationId

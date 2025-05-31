@@ -58,12 +58,12 @@ namespace Adapters.mapper
         {
             ICareTaskDetails details = dto.Type switch
             {
-                CareType.Watering => new WateringDetails
+                Watering => new WateringDetails
                 {
                     AmountInMl = dto.WateringDetails?.AmountInMl ?? throw new ArgumentNullException()
                 },
 
-                CareType.Fertilizing => new FertilizingDetails
+                Fertilizing => new FertilizingDetails
                 {
                     FertilizerName = dto.FertilizingDetails?.FertilizerName ?? throw new ArgumentNullException(),
                     Dosage = dto.FertilizingDetails.Dosage

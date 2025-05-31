@@ -25,6 +25,13 @@ namespace entities
             Name = name;
             Description = description;
         }
+
+        public Location(string id, string name, string? description)
+        {
+            Id = Guid.Parse(id);
+            Name = name;
+            Description = description;
+        }
     }
 
 }

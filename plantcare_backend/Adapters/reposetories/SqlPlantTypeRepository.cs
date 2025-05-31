@@ -41,11 +41,11 @@ namespace Adapters.reposetories
                              VALUES (@Id, @Name, @RequiredWaterAmountMl, @WeeklyWateringTimes, @NeedsDirectSunlight)";
             await _connection.ExecuteAsync(sql, new
             {
-                type.Id,
+                Id = type.Id.ToString(),
                 type.Name,
                 type.RequiredWaterAmountMl,
                 type.WeeklyWateringTimes,
-                type.NeedsDirectSunlight
+                NeedsDirectSunlight = Convert.ToInt64(type.NeedsDirectSunlight)
             });
         }
 

@@ -39,7 +39,7 @@ namespace Adapters.reposetories
             const string sql = "INSERT INTO Locations (Id, Name, Description) VALUES (@Id, @Name, @Description)";
             await _connection.ExecuteAsync(sql, new
             {
-                entity.Id,
+                Id = entity.Id.ToString(),
                 entity.Name,
                 entity.Description
             });

@@ -16,7 +16,7 @@ namespace Domain.entities
 
         public PlantType(string name, int requiredWaterAmountMl, int weeklyWateringTimes, bool needsDirectSunlight)
         {
-            this.Id = new Guid();
+            this.Id = Guid.NewGuid();
             this.Name = name;
             this.RequiredWaterAmountMl = requiredWaterAmountMl;
             this.WeeklyWateringTimes = weeklyWateringTimes;
@@ -30,6 +30,15 @@ namespace Domain.entities
             this.RequiredWaterAmountMl = requiredWaterAmountMl;
             this.WeeklyWateringTimes = weeklyWateringTimes;
             this.NeedsDirectSunlight = needsDirectSunlight;
+        }
+
+        public PlantType(string Id, string name, long requiredWaterAmountMl, long weeklyWateringTimes, long needsDirectSunlight)
+        {
+            this.Id = Guid.Parse(Id);
+            this.Name = name;
+            this.RequiredWaterAmountMl = (int) requiredWaterAmountMl;
+            this.WeeklyWateringTimes = (int) weeklyWateringTimes;
+            this.NeedsDirectSunlight = needsDirectSunlight != 0;
         }
     }
 }
