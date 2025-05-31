@@ -1,66 +1,84 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Grundlagen}
+\chapter{Clean Architecture}
+Bei der Einrichtung des Projekts haben wir besonderen Wert auf die saubere Trennung der Schichten entsprechend der Clean Architecture gelegt.
+Jede Schicht ist als eigenes Projekt im Solution-Explorer organisiert – beginnend bei 3\_Domain, über 2\_Application und 1\_Adapters bis hin zu Plugins.
+Dadurch wird bereits auf Dateiebene erzwungen, dass die Abhängigkeiten nur „nach innen“ zeigen.
+
+Die Domain-Schicht referenziert keine anderen Projekte. Die Application-Schicht referenziert ausschließlich 3\_Domain, und 1\_Adapters kennt
+sowohl 2\_Application als auch 3\_Domain. Das Testprojekt und die Plugin-Schicht kennen alle anderen Projekte. Ein Rückgriff auf innere Schichten
+von außen ist damit hoffentlich technisch ausgeschlossen. Damit soll garantiert werden, dass die Dependency Rule konsequent eingehalten wird.
+
+Für die Verbindung der einzelnen Schichten verwenden wir Dependency Injection. Alle Use Cases und Services erhalten ihre Abhängigkeiten wie Repositories
+über Interfaces, die in der Application-Schicht definiert sind. Die konkreten Implementierungen werden in der Plugin-Schicht (Program.cs)
+registriert. So bleiben alle inneren Schichten unabhängig von konkreten Technologien und jederzeit testbar.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Grundlegende Bausteine}
-% [h]       sollte die Tabelle genau hier anzeigen
-% {clrp}    sind verschieden parameter zum eanzeigen der Tabelle
-%           Anzahl der Buchstaben gleich Anzahl der Spalten
-%           c           zentrierter Text
-%           r           rechtsbündiger Text
-%           l           linksbündiger Text
-%           p{"x"cm}    Spalte soll "x" cm breit sein
-%           |           fügt einen senkrechten Strich zwischen den Spalten ein
-%           \hline      Horizontale Linie ober/unter und zwischen den Zeilen einfügen für Umrandung der Zellen 
-%           \\          Trennung der Zeilen
-%           &           Trennung der Spalten 
+\section{Domain}
+Die Domain-Schicht bildet das Herzstück der Anwendung und enthält ausschließlich fachliche Modelle und Logik. Hier werden zentrale Begriffe wie
+Pflanze, Pflegeplan und Pflegeaufgabe als Entitäten oder Value Objects modelliert. Ziel dieser Schicht ist es, unabhängig von Technologien und
+Implementierungsdetails zu bleiben.
 
-\subsection{Wie baut man Tabellen?}
-
-Hier ganz viel Text und eine Referenz auf die Tabelle \ref{tab:heisetabelle}. 
-\begin{table}[h]
-	\begin{tabular}[h]{|l|p{7cm}|}
-	%\caption{Beschreibung der Tabelle}
-	    \hline
-		erste Spalte und Zeile & zweite Spalte und erste Zeile \\
-		\hline
-		erste Spalte und zweite Zeile & zweite Spalte und zweite Zeile \\
-		erste Spalte und dritte Zeile & zweite Spalte und dritte Zeile \\
-		\label{tab:heisetabelle}
-	\end{tabular}
-\end{table}
-
-\subsection{Wie erstellt man eine Aufzählung?}
-
-Beispiele für Klassifizierungsprobleme:
+In unserer Domain haben wir unter anderem folgende Konzepte definiert:
 \begin{itemize}
-    \item Handschrifterkennung
-    \item Krankheitsanalyse
-    \item E-Mail Spamfilter
+    \item Plant und PlantType
+    \item Careplan
+    \item CareTasks in Form von RecurringCareTask, ScheduledCareTask mit entsprechenden CareTypes und CareTaskDetails wie WateringDetails, FertilizingDetails
+    \item Location
+\end{itemize}
+Zusätzlich wurden in dieser Klasse weitere grundlegende Klassen wie Exeptions und eine CareTaskFactory erstellt. Die nach näherer Betrachtung
+vermutlich in die Application-Schicht ausgelagert werden könnten.
+
+Die grundlegendsten Funktionen und Logiken der hier definierten Klassen wird ebenfalls erstellt z. B. das Berechnen von IsDue() oder IsOverdue()
+bei wiederkehrenden Aufgaben.
+
+Die Domain kennt weder Datenbanken noch Schnittstellen – sie ist vollständig unabhängig und dadurch leicht testbar und wiederverwendbar.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Application}
+Die Application-Schicht stellt das Bindeglied zwischen der fachlichen Logik (Domain) und der Außenwelt dar. Unser Fokus lag darauf, hier klar
+abgegrenzte Anwendungsfälle („Use Cases“) zu definieren, die konkrete Abläufe kapseln – wie etwa das Anlegen einer Pflanze oder das Durchführen
+einer wiederkehrenden Pflegeaufgabe. Alle Abläufe, die ein Benutzer typischerweise in einer Anwendung auslöst, sollten hier als eigenständige
+Klassen modelliert werden.
+
+Wir haben uns bewusst gegen ein generisches Service-Konzept entschieden und stattdessen die Use-Case-Klassen als jeweils zuständig für genau
+einen Anwendungsfall konzipiert. Das erhöht zwar die Anzahl der Klassen, sorgt aber für eine klare Trennung der Verantwortlichkeiten. Eine
+Herausforderung bestand darin, die Zuständigkeiten sauber aufzuteilen. Wir haben komplexe Logik bewusst in die Adapter-Schicht verlagert und
+sämtliche Ablaufentscheidungen aus den Use-Cases ferngehalten. So werden z. B. Benachrichtigungen bei überfälligen Aufgaben nicht automatisch
+verschickt, sondern über den Use Case GetDueTasks lediglich zur Verfügung gestellt. Das macht die Anwendung flexibler – etwa für geplante
+Erweiterungen wie eine mobile App oder eine Integration mit Sensoren.
+
+Für die technische Entkopplung der Schicht setzen wir konsequent auf Interfaces für alle externen Abhängigkeiten. So verwendet z. B. CreatePlant
+das IPlantRepository, ohne zu wissen, ob die Daten später aus einer SQLite-Datenbank, einem Webservice oder einer JSON-Datei stammen. Diese
+Interfaces werden über Dependency Injection bereitgestellt, was die Testbarkeit erhöht und zukünftige Änderungen an der Persistenzschicht
+erleichtert. Diese Interfaces werden in der Application-Schicht definiert.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Adapter}
+Die Adapter-Schicht dient in unserer Architektur als technische Brücke zwischen der Application-Schicht und der Außenwelt. Hier werden
+beispielsweise Daten aus einer Datenbank geladen und in Form gebracht, sodass sie von der Application-Schicht genutzt
+werden können. Hier würde typischerweise ebenfalls die bereitstellung von Endpunkten einer API stattfinden. Allerdings lag in unserem Projekt
+der Fokus auf der Backend-seitigen Vorbereitung.
+
+Die Implementierung von HTTP-Controllern – die in Clean Architecture ebenfalls in die Adapter-Schicht gehören – haben wir bewusst zurückgestellt. Zwar hätten wir mit .NET eine API-Anbindung relativ einfach realisieren können, jedoch hätten wir dafür zusätzliche Framework-Konventionen und externe Abhängigkeiten berücksichtigen müssen.
+
+Stattdessen haben wir uns auf zwei Dinge konzentriert:
+\begin{itemize}
+    \item Ressourcen und Mapper: Wir haben erste Datenstrukturen entworfen, mit denen sich z. B. Pflegeaufgaben oder Pflanzen für eine spätere API-Ausgabe
+strukturieren lassen. Dazu gehören einfache DTOs sowie Mapper, mit denen sich Domain-Modelle in transportfreundliche Objekte überführen lassen.
+    \item Repository-Implementierungen: Ein zentraler Bestandteil dieser Schicht sind unsere konkreten Implementierungen der Repository-Interfaces. So
+enthält die Adapter-Schicht beispielsweise die Klassen SqlPlantRepository, SqlCarePlanRepository und SqlLocationRepository, die den Datenzugriff
+über Dapper und SQLite kapseln. Die Domain- und Application-Schicht bleiben dadurch vollständig unabhängig von der verwendeten
+Datenbanktechnologie.
 \end{itemize}
 
-\subsection{Bissl Mathe Nötig?}
+Durch diese Trennung bleibt unser System modular: Die Adapter-Schicht kann in einem nächsten Schritt um Controller oder ViewModel-Adapter
+ergänzt werden, ohne dass Änderungen an der Fach- oder Anwendungslogik nötig sind.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Plugin}
+Die Plugin-Schicht enthält die konkreten externen Abhängigkeiten, die zum Starten und Ausführen der Anwendung nötig sind. In unserem Projekt
+umfasst sie zwei zentrale Bestandteile:
 
-\begin{displaymath}
-    logit(p) = log \frac{p}{(1-p)}
-    logit(p(y=1|x)) = \sum_{i=0}^{m} w_{i}x_{i} = w^T x 
-\end{displaymath}
+\begin{itemize}
+    \item Datenbankkonfiguration: Hier wird die SQLite-Verbindung eingerichtet. Die Adapter-Schicht nutzt Dapper, die Plugin-Schicht stellt
+    dafür die konkrete Datenquelle bereit.
+    \item Programmstart (Program.cs): In dieser Datei werden die Abhängigkeiten per Dependency Injection registriert und die Anwendung gestartet. Damit verbindet die Plugin-Schicht alle Komponenten zu einem lauffähigen System.
+\end{itemize}
 
-\begin{displaymath}
-    \hat{y} =\left\{%
-    \begin{array}{lll}
-        1, & wenn & sig(z) \ge 0.5\\
-        0, & andernfalls & \\
-    \end{array}%
-    \right.
-\end{displaymath}
-
-\section*{Hier eine Section ohne Nummerierung}
-
-\subsection*{Geht auch bei Subsections}
-Das funktioniert einfach in dem man ein Stern zwischen sub/section und den {} setzt.
-\subsection{Und wieder mit Nummern}
-Aber wie ihr seht werden die Nummern nicht einfach ausgeblendet sondern gar nicht erst erstellt, somit geht es hier weiter mit 2.1.4 was theoretisch 2.2.2 sein müsste.
-
-Nummern wegzulassen ist meiner Meinung nur Sinnvoll wenn Ihr zum Beispiel alle Subsections nicht auflisten wollt, da wenn die Nummerierung wegelassen wird, diese sectionen auch nicht im Inhaltsverzeichnis auftauchen. Bei subsections macht es daher Sinn, wenn das Inhaltsverzeichnis zu groß wird oder die subsections für das Inhaltsverzeichnis uninteressant sind. Hier noch ein kleines Beispiel wie am Absätze macht. Entweder einfach eine Zeile freilassen 
-
-oder zwei \\  Backslashs schreiben 
+Wir haben darauf geachtet, alle externen Technologien klar auf diese Schicht zu beschränken. So bleibt der Rest der Anwendung unabhängig und leicht erweiterbar – z. B. für andere Datenbanken, Logging oder eine API-Anbindung.

@@ -2,7 +2,7 @@
 \chapter{Domain Driven Design}
 Unsere Domäne ist die Pflanzenpflege, ein Bereich, der nicht unbedingt gut professionell durchorganisiert ist. Und trotzdem enthält diese Domäne Begriffe und Aktionen, die sich durch die Gesamtheit der Tätigkeit ziehen. Für dieses Projekt wurde es vorgezogen, die Domänensprache im Code auf Englisch anzuwenden, deshalb würd für jeden deutschen Domänenbegriff die im code verwendete englische Übersetzung in Klammern zugefügt.
 
-\subsection*{Entitäten}
+\section{Entitäten}
 Ganz im Vordergrund stehen hier 3 Dinge, die Pflanze selbst, die Pflegeaktionen und die Organisation dieser in einem Plan.
 \par
 Pflanzen sind das Hauptobjekt der Domäne. Pflanzen sind meist durch Ihren Artennamen spezifiziert. Arten teilen bestimmte Merkmale miteinander, wie zum Beispiel wann und wie viel Wasser oder Sonne sie benötigen. Bewässerung kann manuell als Aktion durchgeführt werden.  Das nötige Sonnenlicht erhalten die Pflanzen meist durch ihre Platzierung an sonnigeren oder schattigeren Bereichen. 
@@ -19,7 +19,7 @@ Daraus Ergeben sich die Hauptsächlichen Entitäten, die in der Domäne abgebild
 	\item Wiederkehrende Aufgabe (RecurringTask)
 \end{itemize}
 
-\subsection*{Value Objects}
+\section{Value Objects}
 Pflegeaktionen kommen in unterschiedlichen Typen, die sich allerdings in ihrer Art auch bei Anwendung auf verschiedene Pflanzentypen eigentlich nicht ändern. Deshalb werden die einzelnen Pflegeaktionen als ValueObjects in der Domäne angesehen. Sie besitzen durch ihren Typen eine inhärente Wertigkeit für den Anwender, sind allerdings im Code alle gleich zu behandeln.  Sie benötigen keine besonderen Methoden oder Attribute, ihr größtes Unterscheidungsmerkmal ist der Typ selbst. Pflegeaktionen, die als Value Objects angelegt wurden, beinhalten:
 
 \begin{itemize}
@@ -31,17 +31,17 @@ Pflegeaktionen kommen in unterschiedlichen Typen, die sich allerdings in ihrer A
 
 Des weiteren existieren in der Domäne noch die Möglichkeit bestimmten Value Objects noch Details anzuhaften. So muss zum Beispiel beim Bewässern klar sein, wie viel Wasser gegeben werden soll, oder welcher Dünger in welcher Menge angewandt werden soll. Dafür wurden die careTaskDetails eingeführt.
 
-\subsection*{Aggregate}
+\section{Aggregate}
 Ein klassisches Beispiel für Aggregate in dieser Domain Bildes der Pflegeplan. Nach der Initialisierung ist es im Pflegeplan möglich, sowohl Pflanzen als auch Aktionen hinzuzufügen und zu entfernen, alle zugewiesenen Aktionen oder Pflanzen zurückzusetzen, sowie alle auszuführenden Aktionen auf einen Blick erkennen zu können. Damit erfüllt der Pflegeplan auch die Anforderungen von CRUD.
 
-\subsection*{Repositories}
+\section{Repositories}
 In dieser Domäne stellen Repositories eine Sammlung aus entweder Aggregaten oder deren Komponenten da, aus denen über IDs Zugriff gewährt wird. Auch für Locations, die nicht direkt Teil eines Aggregates sind, gibt es ein Interface. Daher gibt es im Code vorbereitete Repositories für Pflanzen, Aktionen und Pflegepläne. Sie werden hauptsächlich verwendet, um Domain Services eine Sammlung an Objekten zu geben, mit denen diese Weiterarbeiten können. Dabei wurden sie nur als Interfaces definiert, um nicht die Generierung und Speicherung nach Außen geben zu können (Stichwort Dependency Injection). 
 \par
 Die Repositories erben alle von der Parent Interface IGenericRepository, die die Methoden zum Besorgen von Objekten per ID, das Hinzufügen, Updaten und Löschen vorschreiben. 
 \par
 Für den CarePlan werden zursätzlich noch Methoden vorgeschrieben, die es ermöglichen alle Plane mit Aktionen zu erhalten, die entweder anstehen oder bereits überfällig sind. Für Pflanzen wird vorgeschrieben eine Methode zu implementieren, die es ermöglicht Pflanzen auch per Typ zu finden. Da es sich dabei um keine eindeutige Zuweisung handelt, wird der Return Type der Methode als IEnumerable vorgeschrieben.
 
-\subsection*{Domain Services}
+\section{Domain Services}
 Domain Services bilden Aktionen ab, die im ausführenden Code später die Lesbarkeit erhöhen und diese Aktionen standardisieren.  In der Domäne der Pflanzenpflege gibt es einige Domain Services, die abgebildet werden müssen. Diese lassen sich dabei in 3 Grundarten unterteilen: Pflegeplan-Management (carePlanManagement), Platzierungs-Management (locationManagement) und Pflanzen-Management (plantManagement).
 \par
 In den Grundarten bilden sich verschiedene Aktionen ab, die alle später durch Verwendung der Domain Services automatisiert durchgeführt werden können, wie zum Beispiel die Domain Services AddTaskToCarePlan oder GetDueTasksForCarePlan. Die lassen den späteren Ausführungscode verboser, im Sinne des Domain Driven Designs, erscheinen.
