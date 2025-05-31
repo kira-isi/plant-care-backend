@@ -14,6 +14,9 @@ namespace entities
 
         public Location(string name, string? description)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Name darf nicht leer sein.", nameof(name));
+
             Id = Guid.NewGuid();
             Name = name;
             Description = description;

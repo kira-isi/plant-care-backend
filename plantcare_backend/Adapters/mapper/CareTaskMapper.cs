@@ -58,16 +58,13 @@ namespace Adapters.mapper
         {
             ICareTaskDetails details = dto.Type switch
             {
-                Watering => new WateringDetails
-                {
-                    AmountInMl = dto.WateringDetails?.AmountInMl ?? throw new ArgumentNullException()
-                },
+                Watering => new WateringDetails(dto.WateringDetails?.AmountInMl ?? throw new ArgumentNullException()),
 
                 Fertilizing => new FertilizingDetails
-                {
-                    FertilizerName = dto.FertilizingDetails?.FertilizerName ?? throw new ArgumentNullException(),
-                    Dosage = dto.FertilizingDetails.Dosage
-                },
+                (
+                    dto.FertilizingDetails?.FertilizerName ?? throw new ArgumentNullException(),
+                    dto.FertilizingDetails.Dosage
+                ),
 
                 _ => throw new InvalidOperationException("Unsupported CareType")
             };
