@@ -10,12 +10,22 @@ namespace Domain.entities
 {
     public abstract class CareTask
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; }
         public CareType Type { get; }
         public ICareTaskDetails Details { get; }
 
         public CareTask(CareType type, ICareTaskDetails details)
         {
+            if (!type.Matches(details))
+                throw new ArgumentException($"Invalid details type for care type {type.ToString()}");
+
+            Type = type;
+            Details = details;
+        }
+
+        public CareTask(Guid id, CareType type, ICareTaskDetails details)
+        {
+            Id = id;
             if (!type.Matches(details))
                 throw new ArgumentException($"Invalid details type for care type {type.ToString()}");
 

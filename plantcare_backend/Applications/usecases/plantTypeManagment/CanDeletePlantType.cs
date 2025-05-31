@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Application.usecases.locationManagment
 {
-    public class CanDeleteLocation
+    public class CanDeletePlantType
     {
         private readonly IPlantRepository _plantRepository;
 
-        public CanDeleteLocation(IPlantRepository plantRepository)
+        public CanDeletePlantType(IPlantRepository plantRepository)
         {
             _plantRepository = plantRepository;
         }

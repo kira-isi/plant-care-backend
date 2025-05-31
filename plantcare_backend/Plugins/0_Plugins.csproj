@@ -4,16 +4,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Adapters\1_Adapters.csproj" />
-    <ProjectReference Include="..\Applications\2_Application.csproj" />
-    <ProjectReference Include="..\Domain\3_Domain.csproj" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="controllers\" />
+    <ProjectReference Include="..\Adapters\1_Adapters.csproj" />
   </ItemGroup>
 
 </Project>

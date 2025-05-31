@@ -10,23 +10,31 @@ namespace Domain.entities
 {
     public class Plant
 	{	
-		public Guid PlantID {get;}
-        public String? Name { get;} //optional wird über location und type schon gut definiert
-        public PlantType Type { get;}
-        public Location Location { get; private set; }
+		public Guid Id {get;}
+        public String Name { get;} //optional wird über location und type schon gut definiert
+        public Guid PlantTypeId { get;}
+        public Guid LocationId { get; private set; }
 
 
-		public Plant(PlantType type, Location location, String? name = null)
+		public Plant(Guid plantTypeId, Guid locationId, String? name = null)
 		{
-			this.PlantID = Guid.NewGuid();
+			this.Id = Guid.NewGuid();
 			this.Name = name;
-			this.Type = type;
-            this.Location = location;
+			this.PlantTypeId = plantTypeId;
+            this.LocationId = locationId;
 		}
 
-        public void RelocateTo(Location newLocation)
+        public Plant(Guid id, Guid plantTypeId, Guid locationId, String? name = null)
         {
-            this.Location = newLocation;
+            this.Id = id;
+            this.Name = name;
+            this.PlantTypeId = plantTypeId;
+            this.LocationId = locationId;
+        }
+
+        public void RelocateTo(Guid newLocationId)
+        {
+            this.LocationId = newLocationId;
         }
     }
 }

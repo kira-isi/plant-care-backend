@@ -20,9 +20,9 @@ namespace Application.usecases.plantManagment
 
         public async Task<Guid> ExecuteAsync(PlantType type, Location location, string? name = null)
         {
-            var plant = new Plant(type, location, name);
+            var plant = new Plant(type.Id, location.Id, name);
             await _plantRepository.AddAsync(plant);
-            return plant.PlantID;
+            return plant.Id;
         }
     }
 }

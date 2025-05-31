@@ -19,6 +19,13 @@ namespace Domain.entities
             LastPerformed = DateTime.Today;
         }
 
+        public RecurringCareTask(CareType type, ICareTaskDetails details, TimeSpan interval, DateTime lastPerformed)
+            : base(type, details)
+        {
+            Interval = interval;
+            LastPerformed = lastPerformed;
+        }
+
         public override bool IsDue()
         {
             DateTime now = DateTime.Now;

@@ -21,6 +21,14 @@ namespace Domain.entities
 			this.Plants = new List<Guid>();
 		}
 
+        public CarePlan(Guid id, String name, List<CareTask> taskList, List<Guid> plants)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.TaskList = taskList;
+            this.Plants = plants;
+        }
+
         public void AddTask(CareTask task)
 		{
             TaskList.Add(task);	
@@ -38,7 +46,7 @@ namespace Domain.entities
 
         public void AddPlant(Plant plant) 
 		{
-			Plants.Add(plant.PlantID);
+			Plants.Add(plant.Id);
 		}
 
         public void RemovePlant(Guid plantId) {

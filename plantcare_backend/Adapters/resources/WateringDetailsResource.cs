@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.valueObjects.careTaskDetails
+namespace Adapters.resources
 {
-    public class WateringDetails : ICareTaskDetails
+    public class WateringDetailsResource
     {
         public int AmountInMl { get; set; }
-
-        public string Summary => $"{AmountInMl} ml";
     }
 }
