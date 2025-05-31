@@ -17,14 +17,19 @@
 \contentsline {section}{\numberline {4.4}Repositories}{12}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Domain Services}{12}{section.4.5}%
 \contentsline {chapter}{\numberline {5}Refactoring}{14}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Programming Principles}{18}{chapter.6}%
-\contentsline {section}{\numberline {6.1}SOLID Prinzipien}{18}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Single Responsibility Principle (SRP)}{18}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Open/Closed Principle (OCP)}{18}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Liskov Substitution Principle (LSP)}{19}{subsection.6.1.3}%
-\contentsline {subsection}{\numberline {6.1.4}Interface Segregation Principle (ISP)}{19}{subsection.6.1.4}%
-\contentsline {subsection}{\numberline {6.1.5}Dependency Inversion Principle (DIP)}{19}{subsection.6.1.5}%
-\contentsline {section}{\numberline {6.2}DRY Prinzip}{19}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Kopplung und Kohäsion}{20}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Kopplung}{20}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Kohäsion}{20}{subsection.6.3.2}%
+\contentsline {section}{\numberline {5.1}Finding 1}{15}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Finding 2}{16}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Finding 3}{16}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Finding 4}{17}{section.5.4}%
+\contentsline {section}{\numberline {5.5}kleinere Findings}{17}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Programming Principles}{19}{chapter.6}%
+\contentsline {section}{\numberline {6.1}SOLID Prinzipien}{19}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Single Responsibility Principle (SRP)}{19}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Open/Closed Principle (OCP)}{19}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Liskov Substitution Principle (LSP)}{20}{subsection.6.1.3}%
+\contentsline {subsection}{\numberline {6.1.4}Interface Segregation Principle (ISP)}{20}{subsection.6.1.4}%
+\contentsline {subsection}{\numberline {6.1.5}Dependency Inversion Principle (DIP)}{20}{subsection.6.1.5}%
+\contentsline {section}{\numberline {6.2}DRY Prinzip}{20}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Kopplung und Kohäsion}{21}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Kopplung}{21}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Kohäsion}{21}{subsection.6.3.2}%
