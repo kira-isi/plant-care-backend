@@ -8,6 +8,6 @@ namespace Domain
 {
     public interface ICareTaskDetails
     {
-        string Summary { get; }
+        public string Summery {  get;}
     }
 }

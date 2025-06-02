@@ -37,6 +37,12 @@
 % mehr Infos zu natbib:  https://www.overleaf.com/learn/latex/bibliography_management_with_natbib
 \usepackage{nonfloat}               % sollte keine Gleitumgebung geben
 
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % löscht Kopf- und Fußzeile
+\fancyfoot[C]{\thepage} % Seitenzahl unten zentriert
+\renewcommand{\headrulewidth}{0pt}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Angaben zur Arbeit
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,6 +75,8 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \pagenumbering{roman}
@@ -81,7 +89,7 @@
 	\hfill\includegraphics[width=4cm]{img/dhbw-logo}\\[2cm]
 	{\Huge \Titel}\\[1.5cm]
 	{\Huge\scshape \Was}\\[1.5cm]
-	{\large Studiengang \Studiengang}\\[0.5cm]
+	{\large Studienrichtung \Studienrichtung}\\[0.5cm]
 	{\large an der}\\[0.5cm]
 	{\large Dualen Hochschule Baden-Württemberg Karlsruhe}\\[0.5cm]
 
@@ -98,13 +106,6 @@ Dozent			         		& Daniel Lindner		\\
 \end{titlepage}
 \onehalfspacing
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Nur für Bachelorarbeiten einfügen:
-% hab ich immer drin :)
-\input{erklaerung.tex}
-\include{abstract}
-\input{zusammenfassung}
 
 
 \newpage
@@ -120,10 +121,11 @@ Dozent			         		& Daniel Lindner		\\
 
 \include{content/kapitel1}
 \include{content/kapitel2}
+\include{content/unitTest}
 \include{content/kapitel3}
 \include{content/kapitel4}
 \include{content/kapitel5}
-%\include{content/kapitel6}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Ab hier beginnt der Anhang
@@ -137,7 +139,7 @@ Dozent			         		& Daniel Lindner		\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliothek wird hier eingebunden. 
-\bibliography{bericht}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
